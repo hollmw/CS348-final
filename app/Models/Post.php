@@ -22,7 +22,15 @@ class Post extends Model
         return view('post.show', compact('post'));
     }
 
-    
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
 }
