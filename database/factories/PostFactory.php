@@ -20,6 +20,7 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence,
             'content' => $this->faker->text(255),
             'user_id' => User::factory(),
+            'views' => $this->faker->numberBetween(0,100),
         ];
     }
 }

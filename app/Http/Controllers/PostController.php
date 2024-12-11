@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -10,9 +11,11 @@ class PostController extends Controller
     {
         $posts = Post::with(['comments.user', 'user']) -> get();
 
+        $isAdmin = auth()->check() && auth()->user()->role === 'admin';
+
         return view('home', [
             'posts' => $posts,
-            'isAdmin' => auth()->check() && auth()->user()->role === 'admin',
+            compact('posts', 'isAdmin'),
         ]);
     }
 }
