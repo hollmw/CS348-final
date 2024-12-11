@@ -1,42 +1,33 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Route;
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-$adminMiddleware = function ($request, $next) {
-    if (auth()->user() && auth()->user()->role === 'admin') {
-        return $next($request);
-    }
-
-    abort(403, 'Unauthorized action.');
-};
-
+// Public route (accessible to everyone)
 Route::get('/', [PostController::class, 'index'])->name('home');
 
+// Authenticated routes
+Route::middleware(['auth'])->group(function () {
+    // Dashboard route (requires authentication)
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware('verified')->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+    // Profile management routes (requires authentication)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/analytics',function() {
-        if (auth()->user()->role !== 'admin'){
-            abort(403, 'Unauthorised Access');
+    // Analytics route (requires admin role)
+    Route::get('/analytics', function () {
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized Access');
         }
 
         return view('analytics');
     })->name('analytics');
 });
 
+// Default auth routes (login, registration, etc.)
 require __DIR__.'/auth.php';
