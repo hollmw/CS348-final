@@ -15,7 +15,7 @@ class PostController extends Controller
 
         return view('home', [
             'posts' => $posts,
-            compact('posts', 'isAdmin'),
+            'isAdmin' => $isAdmin,
         ]);
     }
 }
