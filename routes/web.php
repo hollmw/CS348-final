@@ -3,9 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CommentController;
+
 
 // Public route (accessible to everyone)
 Route::get('/', [PostController::class, 'index'])->name('home');
+
 
 // Authenticated routes
 Route::middleware(['auth'])->group(function () {

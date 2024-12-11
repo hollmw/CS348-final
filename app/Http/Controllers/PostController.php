@@ -13,9 +13,6 @@ class PostController extends Controller
 
         $isAdmin = auth()->check() && auth()->user()->role === 'admin';
 
-        return view('home', [
-            'posts' => $posts,
-            'isAdmin' => $isAdmin,
-        ]);
+        return view('home', compact('posts'));
     }
 }
