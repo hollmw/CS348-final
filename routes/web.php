@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
+use App\Livewire\PostManager;
 
 
 // Public route (accessible to everyone)
@@ -37,7 +38,12 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
+    Route::get('/', function () {return view('home');})->name('home');
 
+
+    Route::get('/test-livewire', function () {
+        return view('home');
+    })->name('test-livewire');
 
 });
 
