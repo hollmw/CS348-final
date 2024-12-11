@@ -1,32 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>Posts</h1>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1 class="mb-4">Forum Posts</h1>
 
+        
         @foreach ($posts as $post)
-            <div class="card mb-4">
+            <div class="card mb-3">
                 <div class="card-body">
-                    <h2>{{ $post->title }}</h2>
-                    <p>{{ $post->content }}</p>
-                    <p>By: {{ $post->user->name }}</p>
-                    
-                    {{-- Show views only for admin users --}}
-                    @if ($isAdmin)
-                        <p><strong>Views:</strong> {{ $post->views }}</p>
-                    @endif
+                    <h5 class="card-title">{{ $post->title }}</h5>
+                    <p class="card-text">{{ $post->content }}</p>
+                    <p class="text-muted">Posted by {{ $post->user->name }} at {{ $post->created_at->format('d-m-Y H:i') }}</p>
 
-                    <h4>Comments:</h4>
-                    @forelse ($post->comments as $comment)
-                        <div class="mb-2">
-                            <p>{{ $comment->content }}</p>
-                            <small>By: {{ $comment->user->name }}</small>
+                    
+                    <h6>Comments:</h6>
+                    @foreach ($post->comments as $comment)
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <p>{{ $comment->content }}</p>
+                                <p class="text-muted">By {{ $comment->user->name }} at {{ $comment->created_at->format('d-m-Y H:i') }}</p>
+                            </div>
                         </div>
-                    @empty
-                        <p>No comments yet.</p>
-                    @endforelse
+                    @endforeach
+
+                    
+                    @auth
+                        <form method="POST" action="{{ route('comments.store', $post->id) }}">
+                            @csrf
+                            <div class="mb-3">
+                                <textarea name="content" class="form-control" rows="2" placeholder="Write a comment..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Add Comment</button>
+                        </form>
+                    @else
+                        <p><a href="{{ route('login') }}">Login</a> to add a comment.</p>
+                    @endauth
                 </div>
             </div>
         @endforeach
     </div>
+</div>
 @endsection

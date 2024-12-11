@@ -27,6 +27,9 @@ Route::middleware(['auth'])->group(function () {
 
         return view('analytics');
     })->name('analytics');
+
+    Route::get('/', [PostController::class, 'index'])->name('home');
+    Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
 });
 
 // Default auth routes (login, registration, etc.)
