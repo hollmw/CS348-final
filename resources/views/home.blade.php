@@ -28,9 +28,7 @@
                     @auth
                         <form method="POST" action="{{ route('comments.store', $post->id) }}">
                             @csrf
-                            <div class="mb-3">
-                                <textarea name="content" class="form-control" rows="2" placeholder="Write a comment..."></textarea>
-                            </div>
+                            <textarea name="content" class="form-control" rows="2" placeholder="Write a comment..."></textarea>
                             <button type="submit" class="btn btn-primary btn-sm">Add Comment</button>
                         </form>
                     @else

@@ -9,10 +9,9 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with(['comments.user', 'user']) -> get();
-
-        $isAdmin = auth()->check() && auth()->user()->role === 'admin';
-
+        
+        $posts = Post::with(['user', 'comments.user'])->latest()->get();
         return view('home', compact('posts'));
+        
     }
 }
