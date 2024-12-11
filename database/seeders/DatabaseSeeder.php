@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Comment;
+use App\Models\Post;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\PostSeeder;
@@ -21,10 +23,23 @@ class DatabaseSeeder extends Seeder
             CommentSeeder::class,
         ]);
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Admin',
+            'email' => 'root@admin.com',
             'role' => 'admin',
         ]);
+
+        $users = User::factory(10)->create();
+
+        $posts = Post::factory(5)->create();
+
+        foreach ($posts as $post) {
+            Comment::factory(rand(2, 5))->create([
+                'post_id' => $post->id,
+                'user_id' => $users->random()->id,
+            ]);
+        }
+
+        
 
         
     }
