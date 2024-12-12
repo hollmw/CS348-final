@@ -10,7 +10,7 @@
     </form>
 
     <div id="posts-list" class="mt-4">
-        @foreach ($posts as $post)
+        @foreach ($this->posts as $post)
             <div class="card mb-3">
                 <div class="card-body">
                     <h5>{{ $post->title }}</h5>

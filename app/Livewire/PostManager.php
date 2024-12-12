@@ -13,31 +13,26 @@ class PostManager extends Component
 
     public function mount()
     {
-        $this->posts = Post::with(['user', 'comments.user'])->get();
+        $this->posts = Post::with('user')->get();
     }
 
     public function createPost()
     {
-        $this->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-        ]);
-
         $post = Post::create([
             'title' => $this->title,
             'content' => $this->content,
-            'user_id' => auth()->id(),
+            'user_id' => auth()->id()
         ]);
 
-        $post->load('user');
-        $this->posts->prepend($post);
-        $this->reset(['title', 'content']);
+        $this->title = '';
+        $this->content = '';
+        
+        // Refresh the posts list
+        $this->posts = Post::with('user')->get();
     }
 
     public function render()
     {
-        return view('livewire.post-manager', [
-            'posts' => $this->posts
-        ]);
+        return view('livewire.post-manager');
     }
 }
