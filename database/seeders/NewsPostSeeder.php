@@ -6,36 +6,37 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Post;
 use App\Models\User;
+use Faker\Factory;
+
 
 use Illuminate\Support\Facades\Http;
+use App\Services\NewsApiService;
 
 
 
 class NewsPostSeeder extends Seeder
 {
+    protected $newsApiService;
+    protected $faker;
+
+    public function __construct(NewsApiService $newsApiService)
+    {
+        $this->newsApiService = $newsApiService;
+        $this->faker = Factory::create();
+    }
+
     public function run()
     {
-        // Fetch data from NewsAPI
-        $response = Http::get('https://newsapi.org/v2/top-headlines', [
-            'country' => 'us',
-            'apiKey' => 'a453682571df48f2b57dfcfceb081bab',
-        ]);
+        
+        $articles = $this->newsApiService->fetchHeadlines('us', 5);
 
-        // Debugging: Check if the response is successful
-        if ($response->successful()) {
-            $articles = $response->json()['articles'];
-
-            foreach (array_slice($articles, 0, 3) as $article) {
-                Post::create([
-                    'title' => $article['title'] ?? 'No Title',
-                    'content' => $article['description'] ?? 'No Description',
-                    'user_id' => 1,
-                ]);
-            }
-        } else {
-            // Log the error response for debugging
-            $this->command->error('API request failed: ' . $response->status());
-            $this->command->error('Response: ' . $response->body());
+        foreach ($articles as $article) {
+            Post::create([
+                'title' => $article['title'] ?? 'No Title',
+                'content' => $article['description'] ?? 'No Description',
+                'user_id' => 1,//;d
+                'views' => $this->faker->numberBetween(0,100)
+            ]);
         }
     }
 }
