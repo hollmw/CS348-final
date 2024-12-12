@@ -10,7 +10,8 @@ class PostController extends Controller
     public function index()
     {
         
-        $posts = Post::with(['user', 'comments.user'])->latest()->get();
+        //$posts = Post::with(['user', 'comments.user'])->latest()->get();
+        $posts = Post::all();
         return view('home', compact('posts'));
         
     }
