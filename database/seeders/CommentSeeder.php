@@ -15,16 +15,14 @@ class CommentSeeder extends Seeder
      */
     public function run(): void
     {
-        
         $posts = Post::all();
         $users = User::all();
-
-        
+    /*
         $posts->each(function ($post) use ($users) {
             Comment::factory(3)->create([
                 'post_id' => $post->id,
-                'user_id' => $users->random()->id,
+                'user_id' => fn() => $users->random()->id, 
             ]);
-        });
+        });*/
     }
 }

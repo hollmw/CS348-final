@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         $posts = Post::factory(5)->create();
 
         foreach ($posts as $post) {
-            $numberOfComments = random_int(1, 3);
+            $numberOfComments = random_int(0, 3);
             collect(range(1, $numberOfComments))->each(function () use ($post, $users) {
                 Comment::factory()->create([
                     'post_id' => $post->id,

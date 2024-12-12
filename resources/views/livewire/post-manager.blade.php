@@ -46,7 +46,6 @@
                 <div class="mt-4 border-t pt-4">
                     <h4 class="text-sm font-semibold mb-2">Comments</h4>
                     @if ($post->comments->isEmpty())
-                        <p class="text-gray-500">No comments yet. Be the first to comment!</p>
                     @else
                         <ul class="space-y-4">
                             @foreach ($post->comments as $comment)
