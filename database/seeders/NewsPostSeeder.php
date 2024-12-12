@@ -29,7 +29,7 @@ class NewsPostSeeder extends Seeder
                 Post::create([
                     'title' => $article['title'] ?? 'No Title',
                     'content' => $article['description'] ?? 'No Description',
-                    'user_id' => 1, // Assign to a default user
+                    'user_id' => 1,
                 ]);
             }
         } else {
