@@ -2,8 +2,6 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
-
 use App\Models\Post;
 use Livewire\Component;
 
