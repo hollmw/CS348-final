@@ -10,7 +10,7 @@ export default {
         './app/Http/Livewire/**/*.php',
         './resources/views/livewire/**/*.blade.php',
     ],
-
+    
     theme: {
         extend: {
             fontFamily: {
