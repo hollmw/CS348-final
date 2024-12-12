@@ -1,64 +1,77 @@
-<div>
-    <form wire:submit.prevent="createPost" class="mb-6">
-        <div class="mb-3">
-            <input type="text" wire:model="title" class="w-full rounded-md border-gray-300" placeholder="Post Title">
+<div class="container py-5">
+    <div class="card mb-5">
+        <div class="card-header bg-primary text-white">
+            <h5>Create a New Post</h5>
         </div>
-        <div class="mb-3">
-            <textarea wire:model="content" class="w-full rounded-md border-gray-300" rows="3" placeholder="Post Content"></textarea>
+        <div class="card-body">
+            <form wire:submit.prevent="createPost">
+                <div class="mb-3">
+                    <input type="text" wire:model="title" class="form-control" placeholder="Post Title">
+                </div>
+                <div class="mb-3">
+                    <textarea wire:model="content" class="form-control" rows="3" placeholder="Post Content"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Add Post
+                </button>
+            </form>
         </div>
-        <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-            Add Post
-        </button>
-    </form>
+    </div>
 
     
     <div class="space-y-6">
         @foreach ($posts as $post)
-            <div class="bg-white rounded-lg shadow">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold mb-2">{{ $post->title }}</h2>
-                    <p class="text-gray-700 mb-4">{{ $post->content }}</p>
-                    <p class="text-sm text-gray-500">
-                        Posted by {{ $post->user->name }} on {{ $post->created_at->format('M d, Y') }}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title">{{ $post->title }}</h4>
+                    <p class="card-text">{{ $post->content }}</p>
+                    <p class="text-muted small mb-1">
+                        Posted by <strong>{{ $post->user->name }}</strong> on {{ $post->created_at->format('M d, Y') }}
                     </p>
-                    
+
                     @if(auth()->check() && auth()->user()->role === 'admin')
-                        <p class="text-sm text-gray-500 mt-2">Views: {{ $post->views ?? 0 }}</p>
+                        <p class="text-muted small">Views: {{ $post->views ?? 0 }}</p>
                     @endif
 
                     
-                    <div class="mt-6 border-t pt-4">
-                        <h3 class="text-lg font-semibold mb-4">Comments</h3>
-                        
-                        <div class="space-y-4 mb-4">
-                            @foreach($post->comments as $comment)
-                                <div class="bg-gray-50 rounded-lg p-4">
-                                    <p class="text-gray-800 mb-2">{{ $comment->content }}</p>
-                                    <p class="text-sm text-gray-500">
-                                        {{ $comment->user->name }} • {{ $comment->created_at->diffForHumans() }}
-                                    </p>
-                                </div>
-                            @endforeach
-                        </div>
+                    <div class="mt-4 pt-3 border-top">
+                        <h6 class="mb-3">Comments</h6>
 
+                        @if($post->comments->isEmpty())
+                            <p class="text-muted">No comments yet. Be the first to comment!</p>
+                        @else
+                            <div class="mb-3">
+                                @foreach($post->comments as $comment)
+                                    <div class="card bg-light mb-2">
+                                        <div class="card-body py-2">
+                                            <p class="card-text mb-1">{{ $comment->content }}</p>
+                                            <small class="text-muted">
+                                                {{ $comment->user->name }} • {{ $comment->created_at->diffForHumans() }}
+                                            </small>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        
                         @auth
-                            <form wire:submit.prevent="addComment({{ $post->id }})" class="mt-4">
-                                <div class="flex space-x-2">
+                            <form wire:submit.prevent="addComment({{ $post->id }})" class="mt-3">
+                                <div class="input-group">
                                     <textarea 
                                         wire:model="newComment.{{ $post->id }}" 
-                                        class="flex-1 rounded-md border-gray-300 text-sm"
+                                        class="form-control"
                                         rows="1"
                                         placeholder="Write a comment..."
                                     ></textarea>
-                                    <button type="submit" 
-                                        class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                    <button type="submit" class="btn btn-primary">
                                         Comment
                                     </button>
                                 </div>
                             </form>
                         @else
-                            <p class="text-sm text-gray-600 mt-4">
-                                Please <a href="{{ route('login') }}" class="text-blue-500 hover:underline">login</a> to comment.
+                            <p class="small text-muted mt-3">
+                                Please <a href="{{ route('login') }}">login</a> to comment.
                             </p>
                         @endauth
                     </div>
