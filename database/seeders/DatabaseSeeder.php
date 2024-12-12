@@ -32,6 +32,10 @@ class DatabaseSeeder extends Seeder
 
         $posts = Post::factory(5)->create();
 
+        $this->call([
+            NewsPostSeeder::class,
+        ]);
+
         foreach ($posts as $post) {
             $numberOfComments = random_int(0, 3);
             collect(range(1, $numberOfComments))->each(function () use ($post, $users) {
@@ -41,6 +45,7 @@ class DatabaseSeeder extends Seeder
                 ]);
             });
         }
+        
 
         
 
