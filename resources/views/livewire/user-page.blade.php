@@ -1,7 +1,6 @@
 <div class="max-w-4xl mx-auto py-6">
     <h1 class="text-2xl font-bold mb-4">{{ $user->name }}'s Profile</h1>
     
-    <!-- Posts Section -->
     <div class="mb-6">
         <h2 class="text-xl font-semibold mb-3">Posts</h2>
         @forelse ($posts as $post)
@@ -15,7 +14,6 @@
         @endforelse
     </div>
 
-    <!-- Comments Section -->
     <div>
         <h2 class="text-xl font-semibold mb-3">Comments</h2>
         @forelse ($comments as $comment)

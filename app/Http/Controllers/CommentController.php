@@ -25,7 +25,6 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        // Allow only the owner or an admin to delete the comment
         if (auth()->user()->id !== $comment->user_id && auth()->user()->role !== 'admin') {
             abort(403, 'Unauthorized action.');
         }
@@ -36,7 +35,6 @@ class CommentController extends Controller
     }
     public function edit(Comment $comment)
     {
-        // Only allow the owner to edit
         if (auth()->user()->id !== $comment->user_id) {
             abort(403, 'Unauthorized action.');
         }
@@ -46,7 +44,6 @@ class CommentController extends Controller
 
     public function update(Request $request, Comment $comment)
     {
-        // Only allow the owner to update
         if (auth()->user()->id !== $comment->user_id) {
             abort(403, 'Unauthorized action.');
         }
