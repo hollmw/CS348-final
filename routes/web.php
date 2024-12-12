@@ -39,7 +39,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/comments/{post}', [CommentController::class, 'store'])->name('comments.store');
     Route::get('/', function () {return view('home');})->name('home');
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
 
+
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth'])->name('dashboard');
+    
 
     Route::get('/test-livewire', function () {
         return view('home');
