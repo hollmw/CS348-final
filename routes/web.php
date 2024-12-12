@@ -63,6 +63,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
+    Route::resource('posts', PostController::class);
+
 
     
 });
