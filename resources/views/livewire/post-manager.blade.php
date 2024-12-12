@@ -1,5 +1,4 @@
 <div>
-    <!-- Post Creation Form -->
     <form wire:submit.prevent="createPost" class="mb-6">
         <div class="mb-3">
             <input type="text" wire:model="title" class="w-full rounded-md border-gray-300" placeholder="Post Title">
@@ -7,16 +6,15 @@
         <div class="mb-3">
             <textarea wire:model="content" class="w-full rounded-md border-gray-300" rows="3" placeholder="Post Content"></textarea>
         </div>
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+        <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
             Add Post
         </button>
     </form>
 
-    <!-- Posts List -->
+    
     <div class="space-y-6">
         @foreach ($posts as $post)
             <div class="bg-white rounded-lg shadow">
-                <!-- Post Content -->
                 <div class="p-6">
                     <h2 class="text-xl font-bold mb-2">{{ $post->title }}</h2>
                     <p class="text-gray-700 mb-4">{{ $post->content }}</p>
@@ -32,7 +30,6 @@
                     <div class="mt-6 border-t pt-4">
                         <h3 class="text-lg font-semibold mb-4">Comments</h3>
                         
-                        
                         <div class="space-y-4 mb-4">
                             @foreach($post->comments as $comment)
                                 <div class="bg-gray-50 rounded-lg p-4">
@@ -44,7 +41,6 @@
                             @endforeach
                         </div>
 
-                        
                         @auth
                             <form wire:submit.prevent="addComment({{ $post->id }})" class="mt-4">
                                 <div class="flex space-x-2">
@@ -55,7 +51,7 @@
                                         placeholder="Write a comment..."
                                     ></textarea>
                                     <button type="submit" 
-                                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm">
+                                        class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                         Comment
                                     </button>
                                 </div>
