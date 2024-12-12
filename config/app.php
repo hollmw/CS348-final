@@ -124,13 +124,4 @@ return [
     ],
 
 
-
-
-
-    'providers' => [
-        // Other Service Providers...
-        App\Providers\NewsApiServiceProvider::class,
-    ],
-
-
 ];
