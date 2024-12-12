@@ -5,6 +5,9 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 use App\Livewire\PostManager;
+use Livewire\Livewire;
+use App\Livewire\UserPage;
+use App\Livewire\PostPage;
 
 
 // Public route (accessible to everyone)
@@ -48,9 +51,13 @@ Route::middleware(['auth'])->group(function () {
     })->middleware(['auth'])->name('dashboard');
     
 
-    Route::get('/test-livewire', function () {
+    /*Route::get('/test-livewire', function () {
         return view('home');
-    })->name('test-livewire');
+    })->name('test-livewire');*/
+
+    Route::get('/users/{user}', UserPage::class)->name('users.show');
+    Route::get('/posts/{post}', PostPage::class)->name('posts.show');
+
 
 });
 

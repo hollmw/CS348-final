@@ -35,8 +35,11 @@
                 <h3 class="text-lg font-bold mb-2">{{ $post->title }}</h3>
                 <p class="text-gray-700 mb-4">{{ $post->content }}</p>
                 <p class="text-sm text-gray-500">
-                    Posted by <strong>{{ $post->user->name }}</strong> on
-                    {{ $post->created_at->format('M d, Y') }}
+                    Posted by 
+                    <a href="{{ route('users.show', $post->user->id) }}" class="text-blue-500 underline">
+                        {{ $post->user->name }}
+                    </a> 
+                    on {{ $post->created_at->format('M d, Y') }}
                 </p>
                 @if(auth()->check() && auth()->user()->role === 'admin')
                     <p class="text-sm text-gray-500">Views: {{ $post->views ?? 0 }}</p>
@@ -52,8 +55,10 @@
                                 <li class="bg-gray-50 p-3 rounded-lg shadow">
                                     <p>{{ $comment->content }}</p>
                                     <p class="text-xs text-gray-500">
-                                        - {{ $comment->user->name }} •
-                                        {{ $comment->created_at->diffForHumans() }}
+                                        - <a href="{{ route('users.show', $comment->user->id) }}" class="text-blue-500 underline">
+                                            {{ $comment->user->name }}
+                                        </a> 
+                                        • {{ $comment->created_at->diffForHumans() }}
                                     </p>
                                 </li>
                             @endforeach

@@ -6,7 +6,10 @@
             <div class="card-body py-2">
                 <p class="mb-1">{{ $comment->content }}</p>
                 <small class="text-muted">
-                    By {{ $comment->user->name }} 
+                    By 
+                    <a href="{{ route('users.show', $comment->user->id) }}" class="text-blue-500 underline">
+                        {{ $comment->user->name }}
+                    </a> 
                     on {{ $comment->created_at->format('d M Y') }}
                 </small>
             </div>
@@ -34,4 +37,3 @@
         </p>
     @endauth
 </div>
-    
