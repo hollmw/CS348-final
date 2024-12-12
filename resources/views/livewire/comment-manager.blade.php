@@ -13,7 +13,17 @@
                     on {{ $comment->created_at->format('d M Y') }}
                 </small>
             </div>
+            @if(auth()->check() && (auth()->user()->id === $comment->user_id || auth()->user()->role === 'admin'))
+                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?');" class="text-red-500 underline">
+                        Delete
+                    </button>
+                </form>
+            @endif
         </div>
+        
     @endforeach
 
     @auth
@@ -36,4 +46,6 @@
             <a href="{{ route('login') }}">Login</a> to add a comment.
         </p>
     @endauth
+    
+    
 </div>

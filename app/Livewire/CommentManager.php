@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Comment;
 use Livewire\Component;
+use App\Models\Post;
 
 class CommentManager extends Component
 {

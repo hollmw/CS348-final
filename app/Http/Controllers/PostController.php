@@ -22,4 +22,42 @@ class PostController extends Controller
     }
 
 
+    public function destroy(Post $post)
+    {
+        // Allow only the owner or an admin to delete the post
+        if (auth()->user()->id !== $post->user_id && auth()->user()->role !== 'admin') {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $post->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Post deleted successfully.');
+    }
+    public function edit(Post $post)
+    {
+        // Ensure only the owner can edit
+        if (auth()->id() !== $post->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('posts.edit', compact('post'));
+    }
+
+    public function update(Request $request, Post $post)
+    {
+        // Ensure only the owner can update
+        if (auth()->id() !== $post->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        $post->update($validated);
+
+        return redirect()->route('dashboard')->with('success', 'Post updated successfully.');
+    }
+
 }
