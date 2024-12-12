@@ -59,6 +59,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts/{post}', PostPage::class)->name('posts.show');
 
 
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+
+
 });
 
 // Default auth routes (login, registration, etc.)

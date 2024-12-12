@@ -34,6 +34,11 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <!-- Link to the user's own profile -->
+                        <x-dropdown-link :href="route('users.show', Auth::user()->id)">
+                            {{ __('My Page') }}
+                        </x-dropdown-link>
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
@@ -51,6 +56,7 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
