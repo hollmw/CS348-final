@@ -11,6 +11,10 @@ class CommentManager extends Component
     public $post;
     public $newComment = '';
 
+    protected $queryString = ['page' => ['except' => 1]];
+
+
+
     public function mount($post)
     {
         $this->post = $post;
@@ -34,6 +38,13 @@ class CommentManager extends Component
 
     public function render()
     {
-        return view('livewire.comment-manager');
+        return view('livewire.comment-manager', [
+            'comments' => Comment::query()
+                ->when($this->search, function ($query) {
+                    $query->where('content', 'like', '%' . $this->search . '%');
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate($this->perPage)
+            ]);
     }
 }

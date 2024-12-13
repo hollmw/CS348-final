@@ -8,5 +8,8 @@
         </a>
         on {{ $post->created_at->format('M d, Y') }}
     </small>
+    <div class="mt-6">
+        {{ $posts->links() }}
+    </div>
 </div>
 

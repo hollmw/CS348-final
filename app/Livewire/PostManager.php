@@ -13,6 +13,10 @@ class PostManager extends Component
     public $posts;
     public $newComment = [];
 
+    protected $queryString = ['page' => ['except' => 1]];
+
+
+
     public function mount()
     {
         $this->loadPosts();
@@ -59,6 +63,8 @@ class PostManager extends Component
 
     public function render()
     {
-        return view('livewire.post-manager');
+        return view('livewire.post-manager', [
+            'comments' => Comment::orderBy('created_at', 'desc')->paginate(10)
+        ]);
     }
 }
