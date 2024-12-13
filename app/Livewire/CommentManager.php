@@ -46,7 +46,7 @@ class CommentManager extends Component
                     $query->where('content', 'like', '%' . $this->search . '%');
                 })
                 ->orderBy('created_at', 'desc')
-                ->paginate($this->perPage)
+                ->paginate($this->perPage)//paginate
             ]);
     }
 }

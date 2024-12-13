@@ -11,13 +11,10 @@ use App\Livewire\PostPage;
 use App\Livewire\CommentManager;
 
 
-// Public route (accessible to everyone)
 Route::get('/', [PostController::class, 'index'])->name('home');
 
 
-// Authenticated routes
 Route::middleware(['auth'])->group(function () {
-    //requires authentication
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware('verified')->name('dashboard');

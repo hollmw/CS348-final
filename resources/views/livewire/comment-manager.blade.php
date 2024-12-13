@@ -20,7 +20,7 @@
                         <button type="submit" onclick="return confirm('Are you sure you want to delete this comment?');" class="text-red-500 underline hover:text-red-700">
                             Delete
                         </button>
-                    </form>
+                    </form> 
                 </div>
             @endif
         </div>

@@ -11,7 +11,7 @@ class NewsApiService
 
     public function __construct()
     {
-        $this->apiKey = config('services.news.api_key'); // Store the API key in config/services.php
+        $this->apiKey = config('services.news.api_key');
     }
 
     public function fetchHeadlines($country = 'us', $limit = 5)
