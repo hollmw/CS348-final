@@ -21,6 +21,7 @@ class Post extends Model
         $post->addViews();
         return view('post.show', compact('post'));
     }
+    //relationships
 
     public function comments()
     {

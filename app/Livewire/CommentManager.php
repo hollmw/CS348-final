@@ -20,8 +20,10 @@ class CommentManager extends Component
         $this->post = $post;
     }
 
+    //show ajax
     public function addComment()
     {
+        //further validation
         $this->validate([
             'newComment' => 'required|min:2'
         ]);
